@@ -21,97 +21,45 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /*
- * (1) hello.s: hello world
- * It's assumed you've read code 0 first.
+ * Note: this is simply a translation of the nasm version to the AT&T syntax,
+ * which 'as' (the GNU assembler) uses by default.
+ * Please refer to the nasm/ folder to see the full commented version.
  */
 
 .global _start
 
 .data
 	/*
-	 * The directive .ascii declares a string, while the label 'str'
-	 * stores the address of the beginning of that string.
-	 * Note the string declared is not null terminated, so we need
-	 * to keep track of its size, which we do next (with STRSIZE).
+	 * The directive .ascii declares a non-null-terminated string.
+	 * Note that directive understand C-like backslash escapes.
 	 */
 	str: .ascii "hello, world\n"
 
-	/*
-	 * The lone dot means the address the assembler is currently at,
-	 * so by subtracting it from 'str' we get the number of bytes in
-	 * the declared string (and that works even if we were to change
-	 * the string.)
-	 */
+	/* The lone dot is the address the assembler is currently at */
 	.equ	STRSIZE, . - str
 
-	/*
-	 * stdout's file descriptor.
-	 * (a file descriptor is a number used in Unix to refer to an
-	 * open file. Special files like stdout are always open,
-	 * and have fixed file descriptors; stdout's file descriptor is 1.)
-	 */
 	.equ	STDOUT, 1
 
 .text
 _start:
-	/*
-	 * If you want to do anything actually useful in assembly,
-	 * you'll need the OS's blessing through a system call.
-	 * That's also the case for I/O: in order to write something
-	 * to stdout, we'll need to use the 'write' system call.
-	 * You can see the full list of system calls with
-	 *	$ man 2 syscalls
-	 * And you can see more info about the syscall <foo> with
-	 *	$ man 2 <foo>
-	 * From write's manpage:
-	 *	ssize_t write(int fd, const void *buf, size_t count);
-	 *	[...]
-	 *	write() writes up to count bytes from the buffer starting
-	 *	at buf to the file referred to by the file descriptor fd.
-	 *
-	 * All these mov instructions place the system call arguments
-	 * where they should be (more on this later).
-	 */
-
-	mov $1, %rax /* __NR_write (more on this later) */
+	mov $1, %rax
 	mov $STDOUT, %rdi
 	/*
-	 * note that addresses must also be prefixed with '$', because
+	 * In AT&T syntax, addresses must also be prefixed with '$',
+	 * because
 	 *	mov str, %rsi
 	 * would mean instead 'move the first 8 bytes at the address str
 	 * to %rsi'.
 	 */
 	mov $str, %rsi
 	mov $STRSIZE, %rdx
-
-	/*
-	 * In 64-bit mode, a system call is done with a dedicated 'syscall'
-	 * instruction. In 32-bit, we'd need to use 'int 0x80'
-	 * ('int' is the instruction for interrupt, 0x80 is the Linux
-	 * kernel's interruption handler).
-	 * The kernel knows which system call we want seeing the number
-	 * in %rax: it must be the number matching the system call.
-	 * In 64 bits, those are defined in
-	 *	/usr/include/asm/unistd_64.h
-	 * as macros __NR_<foo>, where <foo> is the system call.
-	 * The arguments to the system call are also passed in registers:
-	 *	"The kernel interface uses %rdi, %rsi, %rdx, %r10, %r8
-	 *	and %r9." (ABI, appendix A, section A.2.1)
-	 * Which explains the previous 'mov' instructions.
-	 */
 	syscall
 
-	/* now we quit. Even that requires a system call: exit. */
 	mov $60, %rax
 	/*
-	 * The argument to exit is the status code: 0 indicates success,
-	 * non-zero indicates failure. Instead of
-	 *	mov $0, %rdi
-	 * we use the equivalent
-	 *	xor %rdi, %rdi
-	 * which makes an XOR of the two operands and stores the result
-	 * in the second one, following the AT&T syntax.
-	 * XOR'ing a value with itself always gives zero.
+	 * the following instructions makes an XOR of the
+	 * two operands and stores the result in the second one,
+	 * following the AT&T syntax.
 	 */
 	xor %rdi, %rdi
 	syscall
