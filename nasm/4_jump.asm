@@ -20,7 +20,7 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;
 
-; (3) jump.asm: conditional and unconditional jumps, eip and eflags.
+; (4) jump.asm: conditional and unconditional jumps, eip and eflags.
 ;
 ; All code written so far had instructions that were executed sequentially.
 ; But almost any program needs loops (while, for) and branches (if, else, ...);

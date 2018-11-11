@@ -20,7 +20,7 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;
 
-; (2) addr.asm: addressing mode, mov and lea, etc
+; (3) addr.asm: addressing mode, mov and lea, etc
 global _start
 
 section .data
