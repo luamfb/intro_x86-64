@@ -44,9 +44,12 @@ section .data
 	STRSIZE: equ $ - str
 
 	; stdout's file descriptor.
-	; (a file descriptor is a number used in Unix to refer to an
+	; A file descriptor is a number used in Unix to refer to an
 	; open file. Special files like stdout are always open,
-	; and have fixed file descriptors; stdout's file descriptor is 1.)
+	; and have fixed file descriptors:
+	;	stdin: 0
+	;	stdout: 1
+	;	stderr: 2
 	;
 	STDOUT: equ 1
 
