@@ -84,3 +84,5 @@ _start:
 	mov rax, 60 ; __NR_exit
 	xor rdi, rdi
 	syscall
+
+; vim: set ft=nasm:

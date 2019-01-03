@@ -107,3 +107,5 @@ _start:
 	;
 	xor rdi, rdi
 	syscall
+
+; vim: set ft=nasm:
