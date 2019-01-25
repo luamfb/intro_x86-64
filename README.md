@@ -146,7 +146,7 @@ c1(foo1.c) -- preprocessor --> pp1(foo1.i)
 c2(foo2.c) --> pp2(foo2.i)
 cN(fooN.c) --> ppN(fooN.i)
 subgraph compiler
-pp1 -- frontend --> ir1(IR, foo1: intermediate representation)
+pp1 -- frontend --> ir1(IR, foo1)
 pp2 --> ir2(IR, foo2)
 ppN --> irN(IR, foo3)
 ir1 -- backend --> s1(foo1.S: assembly)
@@ -166,7 +166,7 @@ oN --> p
 Note how the compiler is split into frontend and backend: compilers usually support writing
 machine code to more than one CPU architecture, so rather than converting the high-level code
 to that directly, it first converts it into some form of architecture-independent
-intermediate representation.
+intermediate representation (IR).
 
 Also, it may seem weird that the linker recieves and produces machine code. Indeed, the linker
 doesn't translate the code, it just takes the symbols (functions, global variables, etc)
