@@ -180,7 +180,7 @@ in a CPU with the x86-64 architecture. If you don't know yours, run
 ```bash
 	$ uname -m
 ```
-To assemble the code, you'll need 'nasm' (Netwide Assembler), version 2.12 or greater.
+To assemble the code, you'll need `nasm` (Netwide Assembler), version 2.12 or greater.
 To link it, any linker will do. (ld and gold come with binutils, so chances are you have them already).
 
 For assembly code that uses C library functions, you'll need an implementation
@@ -189,7 +189,7 @@ gcc isn't strictly needed, but it makes it easier to link such code.
 
 ### Assembling and linking
 
-Assembling with nasm:
+Assembling with `nasm`:
 
 ```bash
 	$ nasm -g -f elf64 foo.asm
@@ -208,8 +208,8 @@ Linking:
 The -o switch (in both lines) specifies the executable's name;
 if omitted, it will be named a.out.
 The -v switch (in the 2nd line) is optional, and increases verbosity, in case you want to see
-what gcc is doing under the hood.
-You may need the -no-pie option when linking with gcc if your code is using absolute addresses.  
+what `gcc` is doing under the hood.
+You may need the -no-pie option when linking with `gcc` if your code is using absolute addresses.  
 If, upon trying to execute the executable, you get  
 ```
 	bash: ./foo: No such file or directory
@@ -225,25 +225,25 @@ However, debuggers are usually tied to the high-level code that generated that p
 Here, we normally want to step through instructions rather than source code lines,
 and to see the registers' and memory's contents instead of variables.
 I don't know whether the debugger of your favourite IDE (if you have one) has such features:
-feel free to check that. What I do know is the GNU Debugger (gdb) has them:
+feel free to check that. What I do know is the GNU Debugger (`gdb`) has them:
 
-| option                         | description |
-|:------------------------------:|:------------------------------------------:|
-| disas\[semble\]                | print the instructions of a function. |
-| set disassembly-flavor intel   | so that the output of `disas` will be in intel syntax, as opposed to AT&T (which is gdb's default) |
-| si, ni                         | analogous to `s` and `n` execept they step through instructions rather than source code lines |
-| info reg \[reg1\] \[reg2\] ... | prints the value of the requested registers. (Omitting that argument will print all registers) |
-| print $\<reg\>                 | another way of printing a single register's value. The `$` is required. |
-| x/\<fmt\>                      | examine the contents of a memory location. |
-| info stack                     | print the stack. |
+| option                           | description |
+|:--------------------------------:|:------------------------------------------:|
+| `disas[semble]`                  | print the instructions of a function. |
+| `set disassembly-flavor intel`   | so that the output of `disas` will be in intel syntax, as opposed to AT&T (which is `gdb`'s default) |
+| `si`, `ni`                       | analogous to `s` and `n` execept they step through instructions rather than source code lines |
+| `info reg` `[reg1]` `[reg2]` ... | prints the value of the requested registers. (Omitting that argument will print all registers) |
+| `print $<reg>`                   | another way of printing a single register's value. The `$` is required. |
+| `x/<fmt>`                        | examine the contents of a memory location. |
+| `info stack`                     | print the stack. |
 
 Also, there are a few debugging tools out there that you probably didn't need with high-level languages,
 but which are of great useful in assembly:
 
-- strace: prints your program's system calls. This can be used to quickly find errors in system calls.
-- ltrace: prints your program's library calls. Same idea.
+- `strace`: prints your program's system calls. This can be used to quickly find errors in system calls.
+- `ltrace`: prints your program's library calls. Same idea.
 
-And as usual, valgrind is wonderful for finding memory-related errors.
+And as usual, `valgrind` is wonderful for finding memory-related errors.
 
 ### References
 
