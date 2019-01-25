@@ -146,18 +146,18 @@ c1(foo1.c) -- preprocessor --> pp1(foo1.i)
 c2(foo2.c) --> pp2(foo2.i)
 cN(fooN.c) --> ppN(fooN.i)
 subgraph compiler
-pp1 -- frontend --> ir1(IR, foo1: <br> intermediate <br> representation)
+pp1 -- frontend --> ir1(IR, foo1: intermediate representation)
 pp2 --> ir2(IR, foo2)
 ppN --> irN(IR, foo3)
-ir1 -- backend --> s1(foo1.S <br> assembly)
+ir1 -- backend --> s1(foo1.S: assembly)
 ir2 --> s2(foo2.S)
 irN --> sN(fooN.S)
 end
-s1 -- assembler --> o1(foo1.o <br> machine code)
+s1 -- assembler --> o1(foo1.o: machine code)
 s2 --> o2(foo2.o)
 sN --> oN(fooN.o)
-dl(dynamic libraries<br> machine code) -- linker, runtime --> p
-sl(static libraries<br> machine code) -- linker --> p{program<br> machine code}
+dl(dynamic libraries: machine code) -- linker, runtime --> p
+sl(static libraries: machine code) -- linker --> p{program: machine code}
 o1 -- linker --> p
 o2 --> p
 oN --> p
@@ -252,18 +252,11 @@ There are several seemingly vague references in the code, such as 'ABI',
 
 | Reference                  | Document
 |:--------------------------:|-----------------------------------------------|
-| ABI                        |  System V Application Binary Interface, AMD64 Architecture Processor Supplement,
-                                Draft Version 0.99.8 |
-|                            |                                               |
+| ABI                        |  System V Application Binary Interface, AMD64 Architecture Processor Supplement, Draft Version 0.99.8 |
 | Basic architecture         |  Intel(R) 64 and IA-32 Architectures Software Developer's Manual Volume 1: Basic Architecture |
-|                            |                                               |
-| Instruction set            |  Intel(R) 64 and IA-32 Architectures Software Developer's Manual Volume 2 (2A, 2B & 2C):
-                                Instruction Set Reference, A-Z |
-|                            |                                               |
+| Instruction set            |  Intel(R) 64 and IA-32 Architectures Software Developer's Manual Volume 2 (2A, 2B & 2C): Instruction Set Reference, A-Z |
 | NASM manual                | NASM - The Netwide Assembler, version 2.12.01 |
-|                            |                                               |
-| System programming guide   |  Intel(R) 64 and IA-32 Architectures Software Developer's Manual Volume 3 (3A, 3B, 3C & 3D):
-                                System Programming Guide |
+| System programming guide   |  Intel(R) 64 and IA-32 Architectures Software Developer's Manual Volume 3 (3A, 3B, 3C & 3D): System Programming Guide |
 
 It's also noteworthy that the number corresponding to each system call can be found in
 `/usr/include/asm/unistd_64.h`.
