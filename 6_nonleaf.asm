@@ -108,7 +108,7 @@ uint2str:
 	; Unlike eip, rsp is not a special register: it's a general purpose one.
 	; It can therefore be used with all instructions that accept
 	; general purpose registers as arguments, including MOV.
-	;
+	
 	; Instead of pushing rsp to the stack, we store its value on rbp.
 	; (BP stands for Base Pointer.) We can do this because we've already
 	; stored the previous value of rbp with 'push rbp', above.
@@ -123,12 +123,22 @@ uint2str:
 	; restore them before returning.
 	; (Note that all of those PUSH instructions will change rsp's value.)
 	;
-	; Note: we don't have to push callee-saved registers in leaf functions
-	; precisely because they're leaf functions: we can keep these registers
-	; unaltered by simply not changing them. With non-leaf functions this
-	; isn't true, because even if this function doesn't change a certain
-	; callee-saved register, the function we'll call may change it, so we
-	; must push them all.
+	; Note: we can keep callee-saved registers unaltered by simply not
+	; changing them. That's why we didn't need these PUSH instructions
+	; in leaf functions: you only need to push the calee-saved registers
+	; you'll change, so in leaf functions there's a good reason not to use
+	; these registers, and no good reason to use them.
+	; However, a non-leaf function calls another function, and we want to
+	; make sure our local variables are not changed in the function we'll
+	; call. To that end, we can either store those variables
+	;
+	;	(1) in the stack, or
+	;	(2) in callee-saved registers.
+	;
+	; We've chosen (2), because accessing stuff from registers is quicker
+	; than from memory; though if we had too many variables to store,
+	; we'd have to resort to (1). (This is a decision the compiler does
+	; for you when using high level languages.)
 	;
 	push rbx
 	push r12
@@ -136,9 +146,7 @@ uint2str:
 	push r14
 	push r15
 
-	; We store the arguments passed to us in callee saved registers,
-	; to make sure they'll be there after a function call.
-	; (We could have pushed them to the stack too.)
+	; Store the arguments passed to us in callee-saved registers.
 	; As per the SysV calling convention, these arguments will be in rdi,
 	; rsi and rdx respectively.
 	;
