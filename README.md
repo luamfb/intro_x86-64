@@ -247,6 +247,16 @@ but which are of great use in assembly:
 
 And as usual, `valgrind` is wonderful for finding memory-related errors.
 
+### Intel vs AT&T syntax
+
+In x86 assembly, there are two "flavors" of syntax: Intel and AT&T.
+`nasm` uses Intel syntax, while the GNU assmebler (`as`) uses AT&T syntax
+by default (though it has support for Intel syntax as well).
+All source files presented here were written for `nasm` and therefore use the
+Intel syntax.
+
+The file `att.md` summarizes the differences between the two flavors.
+
 ### References
 
 There are several seemingly vague references in the code, such as 'ABI',
