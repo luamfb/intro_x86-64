@@ -273,6 +273,11 @@ There are several seemingly vague references in the code, such as 'ABI',
 It's also noteworthy that the number corresponding to each system call can be found in
 `/usr/include/asm/unistd_64.h`.
 
+### External Links
+
+[This image](https://commons.wikimedia.org/wiki/File:Table_of_x86_Registers_svg.svg)
+shows all x86-64 registers.
+
 ### Copyright 
 
 This file, as well as all other files in this project, are relased under the CC-BY-SA 2.0 license.
