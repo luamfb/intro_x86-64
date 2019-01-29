@@ -1,16 +1,21 @@
 AT&T syntax (used by default in GNU assembler) has a few differences from
 Intel syntax:
-	- immediate values must be prefixed with a dollar sign `$`
-	- registers must be prefixed with a percent sign `%`
-	- for instructions that have a source and a destination operand,
-	their order is reversed: `instr SOURCE, DEST`
-	- the addressing mode is in the form `displacment(base,index,scale)`.
-	Only the base is required.
-	(The address is calculated as base + scale \* index + displacment)
-	- whenever specifying the operand's size is required, this is done as
-	a single-letter suffix in the instruction's name: `byte`, `word`,
-	`dword` and `qword` become suffixes `b`, `w`, `l` (long) and `q`
-	respectively.
+
+- immediate values must be prefixed with a dollar sign `$`
+
+- registers must be prefixed with a percent sign `%`
+
+- for instructions that have a source and a destination operand,
+their order is reversed: `instr SOURCE, DEST`
+
+- the addressing mode is in the form `displacment(base,index,scale)`.
+Only the base is required.  
+(The address is calculated as base + scale \* index + displacment)
+
+- whenever specifying the operand's size is required, this is done as
+a single-letter suffix in the instruction's name: `byte`, `word`,
+`dword` and `qword` become suffixes `b`, `w`, `l` (long) and `q`
+respectively.
 
 Those differences are summarized by the table below.
 
