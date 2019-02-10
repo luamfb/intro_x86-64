@@ -190,6 +190,15 @@ For assembly code that uses C library functions, you'll need an implementation
 of the C library; glibc will do (once again, you probably have it).
 gcc isn't strictly needed, but it makes it easier to link such code.
 
+### Human Requirements
+
+I expect you to have a solid understanding of the basic programming language
+concepts: branches, loops, functions, arrays etc. If you're still struggling
+with these, come back later.  
+I do *not* expect you to know C - however, some things are explained in terms of
+how they would look like in C, and some C functions are used in the code,
+so you may have to look these things up if you don't know them already.  
+
 ### Assembling and linking
 
 Assembling with `nasm`:
@@ -272,6 +281,13 @@ There are several seemingly vague references in the code, such as 'ABI',
 
 It's also noteworthy that the number corresponding to each system call can be found in
 `/usr/include/asm/unistd_64.h`.
+
+### Contributing
+
+I am by no means an expert in assembly. If you see anything that's wrong
+or poorly explained, or if there's something that wasn't mentioned here
+but you think should be, please file an issue in Gitlab and/or send
+a pull request.
 
 ### External Links
 
