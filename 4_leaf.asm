@@ -4,7 +4,7 @@
 ; See LICENSE for details.
 ;
 
-; (5) leaf.sam: leaf functions, calling conventions, and the stack
+; (4) leaf.sam: leaf functions, calling conventions, and the stack
 ;
 ; We've already seen how branches and loops work under the hood;
 ; now let's do the same for functions.

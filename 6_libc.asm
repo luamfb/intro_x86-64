@@ -4,7 +4,7 @@
 ; See LICENSE for details.
 ;
 
-; (7) libc.asm: using C library functions
+; (6) libc.asm: using C library functions
 ;
 ; Here we'll revisit our old friends main() and printf().
 ; Since C files turn into assembly at some point, it makes sense to expect it

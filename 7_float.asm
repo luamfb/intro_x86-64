@@ -4,7 +4,7 @@
 ; See LICENSE for details.
 ;
 
-; (8) float.asm: floating point numbers, x87/SSE/AVX, byte alignment
+; (7) float.asm: floating point numbers, x87/SSE/AVX, byte alignment
 ;
 ; We could've explained this sooner, but I wanted to be able to use printf()
 ; and scanf() rather than making float <-> string conversions by hand.

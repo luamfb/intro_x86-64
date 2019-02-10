@@ -4,7 +4,7 @@
 ; See LICENSE for details.
 ;
 
-; (3) addr.asm: addressing mode, mov and lea, etc
+; (2) addr.asm: addressing mode, mov and lea, etc
 global _start
 
 section .data

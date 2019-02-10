@@ -4,7 +4,7 @@
 ; See LICENSE for details.
 ;
 
-; (6) nonleaf.asm: non-leaf functions and callee-saved registers
+; (5) nonleaf.asm: non-leaf functions and callee-saved registers
 ;
 ; Non-leaf functions require some extra work than leaf functions.
 ; We present them here. With this, you should be able to write any function
