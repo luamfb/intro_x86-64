@@ -21,10 +21,13 @@ global _start
 ; Every program in ELF (Executable and Linking Format, default in Linux)
 ; has several sections. You can see them with
 ;       $ objdump -h <path_to_program>
-; There are many, but the sections we're interested about are
+; There are many, but the sections we'll use are
+;
 ;       data: global variables
+;	rodata: global constants (read-only data)
 ;       bss: space reserved at program startup
 ;       text: CPU instructions (more on that later)
+;
 ; These directives are used to specify their repsective sections.
 ;
 section .data
@@ -33,11 +36,39 @@ section .data
 	; here my_arr stores the address of the first byte declared by
 	; the 'db' (declare bytes) directive.
 	; In other words, this would be equivalent to the C code
+	;
 	;	char my_arr[] = {0x12,0x34,0x56,0x78,0x90};
+	;
 	; Note that db writes its arguments to the resulting program,
 	; i.e. an hexdump of the executable would show these bytes.
 	;
 	my_arr: db 0x12,0x34,0x56,0x78,0x90
+
+	; just as there is db, there's also
+	;
+	;	dw: declare word (2 bytes),
+	;	dd: declare doubleword (4 bytes)
+	;	dq: declare quadword (8 bytes)
+	;
+	; ...among others, but these are the ones we'll use most often.
+	; (See the NASM manual, section 3.2.1 for the full list.)
+	;
+	; It's important to note that all those are little-endian,
+	; meaning that the bytes' order gets "reversed": the last byte in the
+	; multi-byte value goes first.
+	;
+	little_endian_beef: dw 0xbeef ; becomes 0xef 0xbe, in that order
+
+	; if we use dw, dd, ..., with less bytes than they expect, the rest
+	; of the bytes get filled with zeroes.
+	;
+	filled_with_zero: dw 0x42 ; becomes 0x42 0x00, in that order
+
+	; becomes 0x76 0x98 0x32 0x54 0xAA 0x00, in that order
+	my_arr2: dw 0x9876, 0x5432, 0xAA
+	my_arr3: dd 0xdeadbeef, 0xc0ffee ; 0xc0ffee -> 0xee 0xff 0xc0 0x00
+	my_arr4: dq 0x0102030405060708, 0x090a0b0c0d0e0f00
+
 	; the equ directive sets a name to the value of an expression.
 	; Because this is an assembler directive, UNUSED is not written to
 	; the resulting program. This is similar to #define in C.
