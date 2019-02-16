@@ -139,13 +139,6 @@ _start:
 	mov rax, 60
 	; The argument to exit is the status code: 0 indicates success,
 	; non-zero indicates failure.
-	; Instead of
-	;	mov rdi, 0
-	; we use the equivalent
-	;	xor rdi, rdi
-	; which makes an XOR of the two operands and stores the result
-	; in the first one, following the Intel syntax.
-	; XOR'ing a value with itself always gives zero.
 	;
 	xor rdi, rdi
 	syscall
