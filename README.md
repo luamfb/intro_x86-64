@@ -1,6 +1,7 @@
 ### What is this?
 
-An introduction to x86 64-bit assembly, with thoroughly commented code.
+An introduction to x86 64-bit assembly, with thoroughly commented code,
+and exercises at the end of each file.
 
 ### Why?
 
@@ -293,6 +294,9 @@ a pull request.
 
 [This image](https://commons.wikimedia.org/wiki/File:Table_of_x86_Registers_svg.svg)
 shows all x86-64 registers.
+
+### Acknowledgements
+Thanks to Vitor Guidi for the suggestion of adding exercises.
 
 ### Copyright 
 
