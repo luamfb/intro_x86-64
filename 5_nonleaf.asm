@@ -99,8 +99,8 @@ uint2str:
 	; Two things are noteworthy in this pseudocode. First, RSP actually has
 	; its value subtracted when something is PUSH'd - meaning that lower
 	; addresses are closer to the stack top, i.e. the stack is
-	; "upside down". Second, the address of RSP is accessed in the segment
-	; register SS, which stands for Stack Segment (makes sense, right?)
+	; "upside down". (*) Second, the address of RSP is accessed in the
+	; segment register SS, which stands for Stack Segment.
 	;
 	; rsp is also a calee-saved register, so we also have to store its value
 	; somewhere to restore it later. (Actually, this is not always needed,
@@ -127,7 +127,7 @@ uint2str:
 	; changing them. That's why we didn't need these PUSH instructions
 	; in leaf functions: you only need to push the calee-saved registers
 	; you'll change, so in leaf functions there's a good reason not to use
-	; these registers, and no good reason to use them.
+	; these registers, and no good reason to do so.
 	; However, a non-leaf function calls another function, and we want to
 	; make sure our local variables are not changed in the function we'll
 	; call. To that end, we can either store those variables
@@ -137,8 +137,8 @@ uint2str:
 	;
 	; We've chosen (2), because accessing stuff from registers is quicker
 	; than from memory; though if we had too many variables to store,
-	; we'd have to resort to (1). (This is a decision the compiler does
-	; for you when using high level languages.)
+	; we'd have to resort to (1). This is a decision the compiler does
+	; for you when using high level languages. (*)
 	;
 	push rbx
 	push r12
@@ -301,5 +301,70 @@ revstr:
 	jmp .loop
 .done:
 	ret
+
+; Exercises
+;
+; === St Thomas' Wisdom ===
+; Verify all claims marked with (*).
+;
+; === Changing Stuff and Seeing What Happens ===
+;	- Comment out the prologue and epilogue of both non-leaf functions
+;	shown. Do the functions still work? Think about it and explain it
+;	to yourself.
+;
+;	- Do the same for all PUSH instructions with callee-saved registers
+;	(after the prologue), on both non-leaf functions.
+;
+; === Learn to Love Your Compiler ===
+; Write the following pseudocode in your favorite *compiled* language:
+;
+;	(* this function's code could be anything, we just make it complicated
+;	 * hoping it won't be inlined.
+;	 * If this is still being inlined: usually, there are compiler-specific
+;	 * attributes you can put on your code to prevent it from doing so. *)
+;	function foo(integer x) -> integer
+;		n <- 0
+;		i <- 0
+;		while (i < x)
+;			n += i
+;			i += 1
+;		end while
+;		return n
+;	end function
+;
+;	function bar(integer x) -> integer
+;		y <- leaf(x)
+;		return x * y
+;	end function
+;
+; Now inspect the program generated with "objdump -d". Do you see any PUSH
+; instructions in the function foo at all? If you do, try a more agressive
+; optimization level. If you don't, that's because the compiler figured that
+; foo is a leaf function and thus PUSHing it argument isn't necessary, whereas
+; that's not the case for bar. (Its argument is being passed to another function
+; and thus needs to be placed in the stack or in a callee-saved register.)
+;
+; That is the *leaf function optimization*.
+;
+; === Your turn ===
+;	- We've shown a function that converts an unsigned int to string.
+;	Write a function that does the opposite: given a string that represents
+;	a number and the string size, return the corresponding number.
+;	If the function recieves a string that does not represent an unsigned
+;	integer, it should print an error message.
+;	A string that starts with a number but then derails, like "123abc",
+;	may or may not be seen as invalid input: that's up to you.
+;
+;	- Write a program that reads a string from stdin, turns it into a number
+;	with your function, multiplies it by two, turns the result into a string
+;	with uint2str, and finally prints that string.
+;
+;	- Write a recursive function that recieves an unsigned integer N
+;	and returns the N-th number in the Fibonacci sequence.
+;	Again, bonus points if you use dynamic programming.
+;
+;	- Write a program to test your Fibonacci function, by calling it with
+;	several numbers and printing the return values (again using uint2str).
+;
 
 ; vim: set ft=nasm:

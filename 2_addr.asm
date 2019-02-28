@@ -155,4 +155,16 @@ _start:
 	mov rax, 60
 	syscall
 
+; Exercises
+;
+; === Your Turn ===
+;	- Write a program that reads a string from stdin, changes the character
+;	in the middle of that string to a newline, then prints it again.
+;	(The "middle" can be obtained halving the string's size, which is
+;	returned by the read sysem call.)
+;
+;	- Use the addressing mode to calculate 3*n + 1, where n is the value of
+;	a register of your choice.
+;
+
 ; vim: set ft=nasm:

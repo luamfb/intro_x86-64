@@ -83,7 +83,7 @@ _start:
 	;
 	; Therefore, calling a function means pushing the next instruction's
 	; address (i.e. the contents of RIP) to the stack, then jumping to
-	; (setting RIP to) the argument supplied.
+	; (setting RIP to) the argument supplied. (*)
 	; Indeed, from the instruction set:
 	;
 	; "
@@ -153,7 +153,7 @@ revstr:
 	; [...] This is achieved by means of defining a local label
 	; in terms of the previous non-local label: the first definition of
 	; .loop above is really defining a symbol called label1.loop,
-	; and the second defines a symbol called label2.loop."
+	; and the second defines a symbol called label2.loop." (*)
 .loop:
 	cmp r8, r9
 	jge .done
@@ -190,5 +190,65 @@ revstr:
 	; Many protection mechanisms have been devised to prevent it.
 	;
 	ret
+
+; Exercises
+; (Note: all functions referred to here must be leaf functions.)
+;
+; === St Thomas' Wisdom ===
+; Verify all claims marked with (*).
+;
+; === Learn to Love Your Compiler ===
+; Write the following pseudocode in your favorite *compiled* language:
+;
+;	function halve_truncate(integer i) -> integer
+;		return floor(i / 2);
+;	end function
+;	read integer n from standard input
+;	print halve_truncate(n)
+;
+; Now inspect the program generated with "objdump -d". Do you see any call to
+; halve_truncate? If you do, try out a more agressive optmization level
+; (consult your compiler's documentation). If you don't, that's because the
+; compiler realized the function is so small and it's only called from one
+; place, there's no good reason to pay the overhead of calling it.
+; Instead, it "copy-pastes" the function's code and places it where the
+; function call once was, like so:
+;
+;	read integer n from standard input
+;	print floor(n / 2)
+;
+; This is called *inlining*.
+;
+; === Your Turn ===
+;	- Write a function that recieves an unsigned integer, and returns the
+;	number of steps required for that number to become 1 with successive
+;	applications of the Collatz function:
+;		f(n) = n/2      if n is even
+;		       3*n + 1  if n is odd
+;
+;	Bonus points if you use dynamic programming (storing the intermediate
+;	results in a huge array, which can be declared in the .data section.)
+;	Note: because the function must be leaf, you're required to implement
+;	an iterative function (rather than a recursive one).
+;
+;	- Write a program that calls that function for several numbers,
+;	at your choice. Run it in gdb to see your function's return values.
+;
+; === Pointless Constraints Make Amusing Puzzles ===
+;	- Make a function call using only the instructions PUSH and RET,
+;	and labels.
+;	Note that the function is still expected to return to its caller in the
+;	usual way - with a RET instruction at its end - and it must return to
+;	the instruction immediately following the last one that caused
+;	the function to be called.
+;
+;	- Write a program that reads a string, then calls a function that
+;	replaces all its characters with '+' if the string's size is even,
+;	but calls a different function that replaces them with '-' if the
+;	size is odd. However, the program must contain *a single* CALL
+;	instruction, and you're not allowed to use jumps instead of CALL,
+;	or call the functions with any instruction that isn't CALL.
+;	You'll probably need to read the instruction set's entry for CALL here.
+;	(Hint: use two CALLs first, worry about the constraint later.)
 
 ; vim: set ft=nasm:

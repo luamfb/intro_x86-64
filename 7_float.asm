@@ -452,4 +452,33 @@ x87:
 	pop rbp
 	ret
 
+; Exercises
+;
+; === Changing Stuff and Seeing What Happens ===
+; - Comment out all align macros (only one at a time).
+;
+; - Comment out all AND rsp, ... instructions. (It may be that you don't get a
+; segfault because rsp's address was already on a 2^N-byte alignment by chance.
+; If this is the case, throw in a "SUB rsp, 8" so it won't happen.)
+;
+; - Comment out the CVT* instructions.
+;
+; === Your Turn ===
+; - Write a program that prints the number 0.2 as a float, double, and
+; long double, using the same number of decimal places for all of them so you
+; can compare the rounding errors.
+;
+; - Write a program that takes in a vector of 4 doubles and prints the scalar
+; product between them. The vectors can be hardcoded in the data section
+; or read using printf().
+;
+; - Write an avx512 function that does the same operations than avx, but using
+; AVX-512 and the ZMM registers, then write a program to test it.
+;
+; Bonus
+;
+; Write an interactive RPN calculator which supports at least the 4 basic
+; operations. Whether you'll use float, double or long double is up to you.
+;
+
 ; vim: set ft=nasm:

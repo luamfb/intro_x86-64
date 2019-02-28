@@ -91,7 +91,7 @@ my_label:
 	; we compare the input size in rbx with 16, through 'cmp'.
 	;
 	; cmp subtracts the operands, but discards the result, storing only
-	; some info about it in a special register: eflags.
+	; some info about it in a special register: eflags. (*)
 	; eflags stores several flags, but we're mostly interested in two:
 	; the zero flag and the sign flag.
 	; From the basic architecture manual, section 3.4.3.1:
@@ -108,8 +108,8 @@ my_label:
 	cmp rbx, 16
 
 	; conditional jump: if the previous comparsion instruction gives a
-	; 'greater than or equal to' result, jump to the address stored in
-	; the operand label; otherwise, execute the next instruction as usual.
+	; 'greater than or equal to' result, jump to the address stored in the
+	; operand label; otherwise, execute the next instruction as usual. (*)
 	; Just like with 'jmp', this is also changes the value of eip.
 	; There are several instructions for conditional jumps, which are
 	; grouped as 'Jcc' in the instruction set. For the 'jl' instruction,
@@ -191,5 +191,62 @@ loop_done:
 	mov rax, 60
 	xor rdi, rdi
 	syscall
+
+; Exercises
+;
+; === St Thomas' Wisdom ===
+; Verify all claims marked with (*).
+;	- You can see that how CMP affects the eflags register by printing its
+;	value in gdb, and you can see the JL works as stated by putting a
+;	breakpoint on it and stepping one instruction.
+;
+; === Learn to Love Your Compiler ===
+; Write the following pseudocode in your favorite *compiled* language:
+;	n <- 0
+;	for i in range 1 to 9 inclusive do
+;		n += i
+;	end
+;	print n
+;
+; Now inspect the program generated with "objdump -d".
+; Do you see any jumps in the corresponding assembly code? If you do, try out
+; a more agressive optmization level (consult your compiler's documentation).
+; If you don't, that's because the compiler can figure out that the loop's
+; index values are all known at compile time, so it transforms the code into
+;	n <- 0
+;	n += 1
+;	n += 2
+;	...
+;	n += 9
+;	print n
+;
+; This is called *loop unrolling*. Then, it figures that all those computations
+; can also be done in compile time, and finally turns that into
+;	n <- 45
+;	print n
+;
+; === Your Turn ===
+;	- Max: write a program that, given an array of integers, places the
+;	largest of them in a certain register. (The array can be hardcoded,
+;	i.e. declared in the .data section)
+;
+;	- ROT13: write a program that reads a string, then replaces all
+;	of its characters in range a-z (lowercase) with its ROT13 equivalent,
+;	and prints the string. Bonus points if you do it for uppercase A-Z too.
+;	Characters not in range a-z (possibly A-Z as well) must be unchanged.
+;
+; Bonus
+;
+; === Race Against the Compiler ===
+; Write the same program, both in assembly and in your favourite *compiled*
+; progamming language, and compare the execution times of both.
+; (Interpreters have the overhead of parsing the code at runtime, so it
+; wouldn't be fair. Java counts as interpreted here, because it translates
+; its bytecode to native instructions at runtime.)
+; Use hardcoded values as input and do NOT print any results, so the timing
+; measurements won't be tainted by I/O.
+;	- The program must compute the exponentiation of two unsigned integers,
+;	using the square and multiply algorithm.
+;	
 
 ; vim: set ft=nasm:

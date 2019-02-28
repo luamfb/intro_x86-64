@@ -23,7 +23,7 @@ section .data
 
 	; The lone '$' is the address the assembler is currently at,
 	; so by subtracting it from 'str' we get the number of bytes in
-	; the declared string (and that still works if we change the string,
+	; the declared string (and that still works if we change the string (*),
 	; since it's not a hardcoded size.)
 	;
 	STRSIZE: equ $ - str
@@ -96,7 +96,7 @@ _start:
 	;	descriptor fd into the buffer starting at buf.
 	;
 	; Also, if the input has more bytes than count, the extra bytes
-	; won't be read. (Try it out!)
+	; won't be read. (*)
 	;
 
 	; note: instead of
@@ -142,5 +142,19 @@ _start:
 	;
 	xor rdi, rdi
 	syscall
+
+; Exercises
+;
+; === St Thomas' Wisdom ===
+; Verify all claims marked with (*).
+;
+; === Changing Stuff and Seeing What Happens ===
+;	- Scramble the mov instructions before the first SYSCALL and see
+;	if it still works.
+;
+; === Your Turn ===
+;	- Write a program that writes a prompt asking for the user's name,
+;	reads it, then prints back "Hello, " followed by the name that was read.
+;	Note: you can quickly debug system calls with the "strace" command.
 
 ; vim: set ft=nasm:

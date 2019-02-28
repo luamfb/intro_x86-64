@@ -40,7 +40,7 @@ section .data
 	;	char my_arr[] = {0x12,0x34,0x56,0x78,0x90};
 	;
 	; Note that db writes its arguments to the resulting program,
-	; i.e. an hexdump of the executable would show these bytes.
+	; i.e. an hexdump of the executable would show these bytes. (*)
 	;
 	my_arr: db 0x12,0x34,0x56,0x78,0x90
 
@@ -55,7 +55,7 @@ section .data
 	;
 	; It's important to note that all those are little-endian,
 	; meaning that the bytes' order gets "reversed": the last byte in the
-	; multi-byte value goes first.
+	; multi-byte value goes first. (*)
 	;
 	little_endian_beef: dw 0xbeef ; becomes 0xef 0xbe, in that order
 
@@ -138,9 +138,9 @@ _start:
 	;
 	mov eax, 0xabcd
 
-	; copies to the lowset byte: now ax will be 0xab12
+	; copies to the lowset byte: now ax will be 0xab12 (*)
 	mov al, 0x12 
-	; copies to the highest byte: now ax will be 0x3412
+	; copies to the highest byte: now ax will be 0x3412 (*)
 	mov ah, 0x34
 
 	; the code below is a system call to exit cleanly;
@@ -149,5 +149,23 @@ _start:
 	mov rax, 60
 	xor rdi, rdi
 	syscall
+
+; Exercises
+;
+; === First Things First ===
+; Assemble and link this file into a program, then run it.
+; (The program should do nothing other than exit cleanly)
+;
+; === St Thomas' Wisdom ===
+; Verify all claims marked with (*).
+;	- Print a hexdump of the program to verify db, dw, etc. work as stated,
+;	including the endianess.
+;	- Run the program in gdb to verify that the instructions work as stated,
+;	stepping through each one and printing the affected registers' value
+;	as needed. (Refer to the "Debugging" section of README.md to learn how.)
+;
+; === Changing Stuff and Seeing What Happens ===
+;	- Comment out the syscall instruction and run again.
+;
 
 ; vim: set ft=nasm:
