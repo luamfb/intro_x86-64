@@ -108,8 +108,9 @@ my_label:
 	cmp rbx, 16
 
 	; conditional jump: if the previous comparsion instruction gives a
-	; 'greater than or equal to' result, jump to the address stored in the
-	; operand label; otherwise, execute the next instruction as usual. (*)
+	; 'less than' result - that is, if the sign flag is 1 - jump to the
+	; address stored in the operand label; otherwise, execute the
+	; next instruction as usual. (*)
 	; Just like with 'jmp', this is also changes the value of eip.
 	; There are several instructions for conditional jumps, which are
 	; grouped as 'Jcc' in the instruction set. For the 'jl' instruction,
