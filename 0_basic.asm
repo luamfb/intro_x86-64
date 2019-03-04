@@ -143,6 +143,70 @@ _start:
 	; copies to the highest byte: now ax will be 0x3412 (*)
 	mov ah, 0x34
 
+	; and of course, you can make arithmetic too.
+
+	mov rdi, 10
+	mov rsi, 7
+	mov rbx, 14
+
+	inc rdi		; INC: increment
+	dec rsi		; DEC: decrement
+
+	; ADD: adds the two operands and stores the result in the destination
+	; one (again, that's the first one, because we're using Intel syntax.)
+	;
+	add rdi, rbx	; Equivalent to rdi += rbx
+
+	sub rsi, rbx	; SUB: subtract. Equivalent to rsi -= rbx
+
+	; Naturally, we also have instructions for multiplying and dividing
+	; integers, but they come with a few catches.
+	;
+	; First, there's two variants for each: MUL and DIV interpret their
+	; operands as unsigned integers, while IMUL and IDIV interpret their
+	; operands as signed integers in two's complement.
+	; (This changes whether or not the operands' most significant bits are
+	; interpreted as sign bits).
+	;
+	; Second, while both multiplication and division need two numbers,
+	; the MUL and DIV instructions take a single operand because they use
+	; fixed registers for the other number.
+	; For example, when a 64-bit operand is used in
+	;
+	;	- MUL, the result is rax * <operand>, and it's a 128-bit value
+	;	stored in rdx:rax - meaning the 64 lower bits are stored in rdx,
+	;	while the 64 upper bits are stored in rax.
+	;
+	;	- DIV, the operand is the divisor and the dividend is rdx:rax,
+	;	meaning it's a 128-bit value whose 64 upper bits are in rdx and
+	;	whose 64 lower bits are in rax. The quotient is a 64-bit value
+	;	stored in rax, and the remainder is also a 64-bit value, stored
+	;	in rdx.
+	;
+	mov rax, 7
+	mov rdx, 4 ; will be overwritten by MUL
+	mul 3
+	; here, rax <- 3 * 7 = 21, rdx <- 0 (*)
+
+	mov rax, 22
+	mov rdx, 0
+	div 4
+	; here, rax is floor(22 / 4) = 5, and rdx is 22 mod 4 = 2 (*)
+
+	; finally, we have bitwise operations too.
+	mov rdi, 0x35
+	mov rsi, 0x44
+
+	and rdi, rsi	; bitwise AND
+	or rdi, rsi	; bitwise OR
+	xor rdi, rsi	; bitwise XOR
+
+	shr rsi, 2	; right (logical) bitshift: equivalent to rsi >> 2
+	shl rsi, 3	; left (logical) bitshift: equivalent to rsi << 3
+
+	; Note that there's SAR for arithmetic right shift.
+	; There's also SAL, but it's equivalent to SHL.
+
 	; the code below is a system call to exit cleanly;
 	; we'll explain it in the next file.
 	;
@@ -166,6 +230,7 @@ _start:
 ;
 ; === Changing Stuff and Seeing What Happens ===
 ;	- Comment out the syscall instruction and run again.
+;	- Change DIV's operand to zero and run again.
 ;
 
 ; vim: set ft=nasm:
