@@ -185,12 +185,16 @@ _start:
 	;
 	mov rax, 7
 	mov rdx, 4 ; will be overwritten by MUL
-	mul 3
+	mov rdi, 3
+
+	mul rdi
 	; here, rax <- 3 * 7 = 21, rdx <- 0 (*)
 
 	mov rax, 22
 	mov rdx, 0
-	div 4
+	mov rdi, 4
+
+	div rdi
 	; here, rax is floor(22 / 4) = 5, and rdx is 22 mod 4 = 2 (*)
 
 	; finally, we have bitwise operations too.
