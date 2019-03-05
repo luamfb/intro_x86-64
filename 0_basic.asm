@@ -89,8 +89,8 @@ _start:
 	; The following instructions are 'mov', which simply copy data.
 	; In case of such instructions, which have a source and
 	; a destination operand, the Intel syntax (which nasm uses)
-	; dictates the first operand is the source, and the second is
-	; the destination:
+	; dictates the first operand is the destination, and the second is
+	; the source:
 	;	<instr> DEST, SOURCE
 	; Generally, the source and destination operands can be either
 	; an address or a register - a small storage that lives inside
