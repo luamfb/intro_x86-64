@@ -89,7 +89,7 @@ assembly code to machine code.
 Naturally, machine language may vary from one processor to another.
 Any CPU belongs to a certain *architecture*, which defines, among other things,
 the *instruction set* that CPU understands.  
-Therefore, asssembly isn't a single programming language, but a family of languages,
+Therefore, assembly isn't a single programming language, but a family of languages,
 each of which gives human-readable form to the machine code understood by a certain
 CPU architecture.
 
