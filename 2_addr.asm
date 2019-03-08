@@ -26,7 +26,7 @@ _start:
 	mov rax, 1	; __NR_write
 
 	; rdx, rsi, and rdi will not be changed through most of this code,
-	; becuase we'll make a lot of syscalls using these same arguments,
+	; because we'll make a lot of syscalls using these same arguments,
 	; so we might as well not touch these registers.
 	; (syscalls do not change the contents of general purpose registers,
 	; except for rcx, r11 and rax).
