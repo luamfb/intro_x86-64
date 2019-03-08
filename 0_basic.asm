@@ -97,7 +97,7 @@ _start:
 	; the CPU. The source can also be an immediate value, i.e.
 	; a simple number.
 	;
-	mov rax, 0 ; moves the value 0 to regsiter rax
+	mov rax, 0 ; moves the value 0 to register rax
 
 	; There are several registers avaliable on x86_64. Some serve
 	; specific purposes (e.g. registers for storing floating point
