@@ -118,12 +118,13 @@ _start:
 	;	- the lowest 32 bits with 'e' prefix, e.g. eax, ebp
 	;	- the lowest 16 bits without any prefix, e.g. ax, si
 	; Also, for registers rax through rdx, it's possible to access:
-	;	- the lowest byte with the 'l' prefix, replacing the
+	;	- the lowest byte with the 'l' suffix, replacing the
 	;	trailing 'x', e.g. al
-	;	- the highest byte in the 16 bits with the 'h' prefix, in
+	;	- the highest byte in the 16 bits with the 'h' suffix, in
 	;	the same way as above, e.g. ah
 	; This is summarized in figure 3-5 of section 3.4.1,
-	; basic architecture.
+	; basic architecture. These first 8 named registers and their extra
+	; access modes are historical, dating back to the first Intel processors.
 	;
 	; (Note: we use 'byte' as a synonym of '8 bits', because it
 	; indeed is in the x86 architecture.)
