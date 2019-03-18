@@ -11,8 +11,8 @@ all: $(TARGETS) $(CTARGETS)
 $(TARGETS): Makefile
 $(CTARGETS): Makefile
 
-$(CTARGETS): LDFLAGS += -dynamic-linker /lib/ld-linux-x86-64.so.2 /lib/crt1.o /lib/crti.o
-$(CTARGETS): LDLIBS += -lc /lib/crtn.o
+$(CTARGETS): LDFLAGS += -dynamic-linker /lib64/ld-linux-x86-64.so.2 /lib64/crt1.o /lib64/crti.o
+$(CTARGETS): LDLIBS += -lc /lib64/crtn.o
 
 %.o: %.asm
 	$(NASM) $(ASMFLAGS) $<
