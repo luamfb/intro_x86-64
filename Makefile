@@ -19,4 +19,5 @@ $(CTARGETS): $(addsuffix .o, $(CTARGETS))
 	$(NASM) $(ASMFLAGS) $<
 
 clean:
-	rm -f $(TARGETS) $(CTARGETS)
+	rm -f $(TARGETS) $(CTARGETS) \
+	       	$(addsuffix .o, $(TARGETS)) $(addsuffix .o, $(CTARGETS))
