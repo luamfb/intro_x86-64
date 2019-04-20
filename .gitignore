@@ -1,1 +1,10 @@
 todo
+*.o
+0_basic
+1_io
+2_addr
+3_jump
+4_leaf
+5_nonleaf
+6_libc
+7_float
