@@ -202,6 +202,9 @@ so you may have to look these things up if you don't know them already.
 
 ### Assembling and linking
 
+UPDATE: there's a Makefile now, so all you have to do is run 'make' to build
+all programs. Note that the Makefile requires a C compiler.
+
 Assembling with `nasm`:
 
 ```bash
