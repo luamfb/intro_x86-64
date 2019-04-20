@@ -1,5 +1,6 @@
 NASM ?= nasm
 ASMFLAGS += -g -f elf64
+CC ?= cc
 RM ?= rm
 
 TARGETS := 0_basic 1_io 2_addr 3_jump 4_leaf 5_nonleaf
@@ -8,17 +9,14 @@ CTARGETS := 6_libc 7_float
 .PHONY: all clean
 all: $(TARGETS) $(CTARGETS)
 
-$(TARGETS): Makefile
-$(CTARGETS): Makefile
+$(TARGETS): $(addsuffix .o, $(TARGETS))
+	$(LD) $(LDFLAGS) -o $@ $< $(LDLIBS)
 
-$(CTARGETS): LDFLAGS += -dynamic-linker /usr/lib64/ld-linux-x86-64.so.2 /usr/lib64/crt1.o /usr/lib64/crti.o
-$(CTARGETS): LDLIBS += -lc /usr/lib64/crtn.o
+$(CTARGETS): $(addsuffix .o, $(CTARGETS))
+	$(CC) -no-pie -o $@ $<
 
 %.o: %.asm
 	$(NASM) $(ASMFLAGS) $<
-
-%: %.o
-	$(LD) $(LDFLAGS) -o $@ $< $(LDLIBS)
 
 clean:
 	rm -f $(TARGETS) $(CTARGETS)
