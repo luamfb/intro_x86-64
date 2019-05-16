@@ -10,9 +10,28 @@
 ; with C library's _start.
 ; Also, we need to mark those functions as global.
 
+;Arguments from C are passed in to these registers in order:
+;Integrers/pointers: rdi, rsi, rdx, rcx, r8, r9
+;Floats:             xmm0, xmm1, xmm2, xmm3, ..., xmm7
+;Additional pointers are pushed on the stack
+
+;Return
+;Ints/pointers   rax or rdx:rax
+;Floats          xmm0 or xmm1:xmm0
+
+;we must preseve rbp, rbx, r12, r13, r14, r15 so we push/pop
+
 global uint2str
 global factorial
 
+;extern uint64_t uint2str(uint64_t n, uint8_t *buf, uint64_t bufsize)
+;so   n       maps to rdi
+;     *buf    maps to rsi
+;     bufsize maps to rdx
+;we write the data under *buf only bufsize bytes
+;we return to rax the number of bytes written
+;   this function doesnt add a NULL BYTE, C will need to check if there are
+;   any leftover room to add it before printing. Else there is possibly info leftover/failure
 uint2str:
 	push rbp
 	mov rbp, rsp
@@ -71,6 +90,9 @@ uint2str:
 	pop rbp
 	ret
 
+; extern uint64_t factorial(uint64_t n);
+; so n maps to rdi
+; and we return via rax
 factorial:
 	push rbp
 	mov rbp, rsp
