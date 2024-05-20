@@ -107,7 +107,7 @@ basket as assembly isn't right either. Perhaps we should compromise and call C
 a middle-level language?)
 
 Assembly has significant short-comings, though, and that's what ultimately led to
-the creation of high-level languages. Namely, assmebly
+the creation of high-level languages. Namely, assembly
 
 - isn't portable: code written for one processor won't necessarily work on a different one.
 Nowadays this may not be so much of an issue, since there's only half a dozen
