@@ -126,7 +126,13 @@ main:
 	call printf
 	mov rax, 1 ; exit status
 .end:
+	pop r15
+	pop r14
+	pop r13
+	pop r12
+	pop rbx
 	mov rsp, rbp
+	pop rbp
 	ret
 
 ; Exercises
